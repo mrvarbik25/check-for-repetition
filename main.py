@@ -1,8 +1,8 @@
 ## TODO: сделать процентное соотношение
-
 with_out_turns = [] # обявление списков и констант
 turns = []
 template = 'Кол-во повторений: {0}\nПовторения: {1}'
+text = []
 
 def write_in_file(choice, content): # запись в файл
     """функция записи в файл того что было передано в аргумент content"""
@@ -18,6 +18,11 @@ def print_content(choice, content): # вывод на экран
     if choice == 'no':
         print(content)
 
+def percent_calculator(desired_part, integer):
+    """калькулятор процентов"""
+    template = 'Повторения в процентах: {0}%'
+    print(template.format(int(min(len(desired_part), len(integer)) / max(len(desired_part), len(integer)) * 100)))
+
 def split_string():
     """разбивает строку по символу разделителю"""
     string = input() # ввод строки
@@ -32,6 +37,7 @@ def split_string():
     else:                           # иначе выводим: Повторения кол-во повторений, Без повторений
         print('\nПовторения: ' + str(len(turns)) + ' ' + str(turns))
         print('Без повторений: ' + str(with_out_turns))
+        percent_calculator(turns, string)
 
 def split_file():
     """разбивает файл по символу разделителю"""
