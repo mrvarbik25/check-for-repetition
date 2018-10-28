@@ -3,9 +3,10 @@ turns = []
 template = 'Кол-во повторений: {0}\nПовторения: {1}'
 text = []
 choice = None
+choice_simvol_separator = None
 
-def split(string):
-    """разбивка строки или файла"""
+def sort_function(string):
+    """сортировка строки или файла в списки"""
     for i in string: # перебор словаря 'x' со всеми словами
         if i not in with_out_turns: # если i нет в списке with_out_turns => записываем её туда
             with_out_turns.append(i)
@@ -35,7 +36,7 @@ def split_string():
     """разбивает строку по символу разделителю"""
     string = input() # ввод строки
     string = string.split(choice_simvol_separator) # разбивка в словарь по символу разделителю
-    split(string)   # разбивка текста из переменной string в словарь по символу разделителю
+    sort_function(string)   # разбивка текста из переменной string в словарь по символу разделителю
     if turns == []:                 # если список turns пустой то выводим "повторений нет"
         print('\nПовторений нет!')
     else:                           # иначе выводим: Повторения кол-во повторений, Без повторений
@@ -50,14 +51,15 @@ def split_file():
     text = file.read()  # чтение содержимого файла в переменную text
     file.close()
     text = text.split(choice_simvol_separator) # разбивка текста из переменной text в словарь по символу разделителю
-    split(text) # вызов функции для разбивки переменной 'text' по символу разделителю в словарь
+    sort_function(text) # вызов функции для разбивки переменной 'text' по символу разделителю в словарь
     write_in_file_choice = str(input('Записать повторения в файл?[yes/no]: '))  # спрашивает пользователя хочет ли он записать повторения в файл
     write_in_file(write_in_file_choice, template.format(len(turns), str(turns))) # запись в файл по шаблону и подстановка данных через метод format если пользователь ответил YES
     print_content(write_in_file_choice, template.format(len(turns), str(turns))) # вывод на экран по шаблону и подстановка данных через метод format если пользователь ответил NO
 
 def ifchoice(choice):
-    """проверка choice == 1 или 2
-    и вызов соответствующей строки"""
+    """выбор символа разделителя,
+    проверка choice == 1 или 2"""
+    choice_simvol_separator = str(input('Выберите сивол разделитель: '))    # ввод символ разделитель
     while choice == None:   # пока choice = None, если пользователь ввел НЕ 1 ИЛИ 2 а другое число тогда выход из программы
         choice = int(input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> '))
         if choice == 1:     # чтение строки
@@ -69,6 +71,9 @@ def welcome():
     """приветствие"""
     print('\nДобро пожаловать в программу "Повторения" \tauthor Yehor Varbanskiy.\nВведите символ разделитель.\nПример:\' \' или \',\'\n')
 
-welcome()
-choice_simvol_separator = str(input('Выберите сивол разделитель: '))    # ввод символ разделитель
-ifchoice(choice)
+def main():
+    welcome()
+    ifchoice(choice)
+
+if __name__ == '__main__':
+    main()
