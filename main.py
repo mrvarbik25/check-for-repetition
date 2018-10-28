@@ -2,7 +2,6 @@ with_out_turns = [] # обявление списков и констант
 turns = []
 template = 'Кол-во повторений: {0}\nПовторения: {1}'
 text = []
-choice = None
 choice_simvol_separator = None
 
 def sort_function(string):
@@ -56,16 +55,15 @@ def split_file():
     write_in_file(write_in_file_choice, template.format(len(turns), str(turns))) # запись в файл по шаблону и подстановка данных через метод format если пользователь ответил YES
     print_content(write_in_file_choice, template.format(len(turns), str(turns))) # вывод на экран по шаблону и подстановка данных через метод format если пользователь ответил NO
 
-def ifchoice(choice):
+def ifchoice():
     """выбор символа разделителя,
     проверка choice == 1 или 2"""
     choice_simvol_separator = str(input('Выберите сивол разделитель: '))    # ввод символ разделитель
-    while choice == None:   # пока choice = None, если пользователь ввел НЕ 1 ИЛИ 2 а другое число тогда выход из программы
-        choice = int(input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> '))
-        if choice == 1:     # чтение строки
-            split_string()
-        elif choice == 2:   # чтение файла
-            split_file()
+    choice = int(input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> '))
+    if choice == 1:     # чтение строки
+        split_string()
+    elif choice == 2:   # чтение файла
+        split_file()
 
 def welcome():
     """приветствие"""
@@ -73,7 +71,7 @@ def welcome():
 
 def main():
     welcome()
-    ifchoice(choice)
+    ifchoice()
 
 if __name__ == '__main__':
     main()
