@@ -3,6 +3,7 @@ turns = []
 template = 'Кол-во повторений: {0}\nПовторения: {1}'
 text = []
 choice_simvol_separator = None
+file_name = None
 
 def sort_function(string):
     """сортировка строки или файла в списки"""
@@ -15,7 +16,10 @@ def sort_function(string):
 def write_in_file(choice, content): # запись в файл
     """функция записи в файл того что было передано в аргумент content"""
     if choice == 'yes':
-        file = open('file_with_repetitions.txt', 'w')   #  создание файла
+        if '/' in file_name:
+            index = file_name.rfind('/')
+            file_with_repetitions = file_name[:index + 1] + 'file_with_repetitions.txt'
+        file = open(file_with_repetitions, 'w')   #  создание файла
         file.write(content) # запись в файл то что передано в аргумент content
         print('Повторения записаны в файл \'file_with_repetitions.txt\'')
     elif choice == 'no':
@@ -45,7 +49,8 @@ def split_string():
 
 def split_file():
     """разбивает файл по символу разделителю"""
-    file_name = str(input('Название файла: '))
+    global file_name
+    file_name = str(input('Название или путь к файлу: '))
     file = open(file_name, 'r') # чтение файла в режиме read only
     text = file.read()  # чтение содержимого файла в переменную text
     file.close()
