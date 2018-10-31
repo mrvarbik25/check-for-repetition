@@ -14,11 +14,11 @@ def sort_function(string):
             turns.append(i)
 
 def write_in_file(choice, content): # запись в файл
-    """функция записи в файл того что было передано в аргумент content"""
+    """функция записи в файл того, что было передано в аргумент content"""
     if choice == 'yes':
-        if '/' in file_name:
-            index = file_name.rfind('/')
-            file_with_repetitions = file_name[:index + 1] + 'file_with_repetitions.txt'
+        if '/' in file_name:    # если указан путь к файлу
+            index = file_name.rfind('/')    # записываем индекс самого правого символа '/'
+            file_with_repetitions = file_name[:index + 1] + 'file_with_repetitions.txt' # и посредством среза узнаем путь к файлу а посредством конкатенации добавляем имя file_with_repetitions.txt и записываем файл с повторениями туда (/some/path/filename.txt)
         file = open(file_with_repetitions, 'w')   #  создание файла
         file.write(content) # запись в файл то что передано в аргумент content
         print('Повторения записаны в файл \'file_with_repetitions.txt\'')
@@ -63,12 +63,19 @@ def split_file():
 def ifchoice():
     """выбор символа разделителя,
     проверка choice == 1 или 2"""
-    choice_simvol_separator = str(input('Выберите сивол разделитель: '))    # ввод символ разделитель
-    choice = int(input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> '))
-    if choice == 1:     # чтение строки
-        split_string()
-    elif choice == 2:   # чтение файла
-        split_file()
+    try:
+        choice_simvol_separator = str(input('Выберите сивол разделитель: '))    # ввод символ разделитель
+        if not choice_simvol_separator: # если пользователь не ввел ничего тогда выйти из программы, так как пустые строки в python = False
+            print('[ Error ]\nError type: NoSeparatorCharacterSelected')
+            raise SystemExit    # вызов исключения для выхода
+        choice = int(input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> '))
+        if choice == 1:     # чтение строки
+            split_string()
+        elif choice == 2:   # чтение файла
+            split_file()
+    except (KeyboardInterrupt, ValueError):   # при завершении программы выводить вместо ошибки - [ stopped ]
+        print('\n[ stopped ]')
+        raise SystemExit    # вызов исключения для выхода
 
 def welcome():
     """приветствие"""
