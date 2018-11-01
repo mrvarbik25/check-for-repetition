@@ -23,7 +23,10 @@ def work_with_args():
                     text = text.split(args[1])
                     sort_function(text) # сортировка на повторения
                     if args[2] == 'no': # если третий аргумент = no, просто вывести на экран
-                        print_content('no', template.format(len(turns), str(turns)))
+                        if turns:   # если в списке turns что-то есть, тогда вывести повторения
+                            print_content('no', template.format(len(turns), str(turns)))
+                        if not turns:   # если в списке turns ничего нет, тогда вывести Повторений нет!
+                            print('Повторений нет!')
                     if args[2] == 'yes':    # если третий аргумент = yes, то записать в файл с повторениями
                         if '/' in args[0]:    # если указан путь к файлу
                             index = args[0].rfind('/')    # записываем индекс самого правого символа '/'
@@ -33,7 +36,10 @@ def work_with_args():
                                 print('Повторения записаны в файл \'file_with_repetitions.txt\'')
                         else:   # если указано имя файла а не путь к нему
                             with open('file_with_repetitions.txt', 'w') as file:  #  создание файла
-                                file.write(template.format(len(turns), str(turns))) # запись в файл temlpate
+                                if turns:   # если в списке turns что-то есть, тогда записать повторения в файл
+                                    file.write(template.format(len(turns), str(turns))) # запись в файл temlpate
+                                if not turns:   # если в списке turns ничего нет, тогда вывести Повторений нет!
+                                    print('Повторений нет!')
                             print('Повторения записаны в файл \'file_with_repetitions.txt\'')
             except IndexError:  # если переданы не все аргументы
                 print('[ Error ] [ NotAllArgumentsSpecified ]')
@@ -125,6 +131,7 @@ def main():
     ifchoice()
 
 if __name__ == '__main__':
-    work_with_args()
     if sys.argv[1:] == []:  # если аргументов нет тогда обычный запуск
         main()
+    else:   # иначе запуск работы с аргументами
+        work_with_args()
