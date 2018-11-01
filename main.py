@@ -67,13 +67,16 @@ def ifchoice():
         choice_simvol_separator = str(input('Выберите сивол разделитель: '))    # ввод символ разделитель
         if not choice_simvol_separator: # если пользователь не ввел ничего тогда выйти из программы, так как пустые строки в python = False
             print('[ Error ]\nError type: NoSeparatorCharacterSelected')
-            raise SystemExit    # вызов исключения для выхода
-        choice = int(input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> '))
-        if choice == 1:     # чтение строки
+            raise SystemExit    # вызов исключения ( если choice_simvol_separator  - пустой ) для выхода
+        choice = input('\nВыберите:\n1 - чтение строки\n2 - чтение файла\n>>> ')
+        if not choice:  # вызов исключения ( если choice - пустой ) для выхода
+            print('[ Error ]\nError type: NotOneItemSelected')
+            raise SystemExit
+        if choice == '1':     # чтение строки
             split_string()
-        elif choice == 2:   # чтение файла
+        elif choice == '2':   # чтение файла
             split_file()
-    except (KeyboardInterrupt, ValueError):   # при завершении программы выводить вместо ошибки - [ stopped ]
+    except KeyboardInterrupt:   # при завершении программы выводить вместо ошибки - [ stopped ]
         print('\n[ stopped ]')
         raise SystemExit    # вызов исключения для выхода
 
