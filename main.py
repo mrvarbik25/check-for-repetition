@@ -1,5 +1,5 @@
 # program to check for repetition.
-# example to run with arguments: python3 main.py x.txt space no
+# example to run with arguments: python3 main.py namefile.txt space no
 import sys
 import os
 template = 'Кол-во повторений: {0}\nПовторения: {1}'
