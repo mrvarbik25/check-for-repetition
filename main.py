@@ -11,14 +11,14 @@ file_name = None
 
 def work_with_args():
     args = sys.argv[1:]
-    if args[1] == 'space':  # если во втором аргументе указано 'space' то заменить это на символ пробела ' '
-        args.pop(1)
-        args.insert(1, ' ')
     if args:    # если в аргументы что то передано
         if os.path.exists(args[0]): # если указан верный путь к файлу
             try:
+                if args[1] == 'space':  # если во втором аргументе указано 'space' то заменить это на символ пробела ' '
+                    args.pop(1)
+                    args.insert(1, ' ')
                 file_name = args[0] # присвоить к переменной file_name значение первого аргумента
-                with open(file_name) as file:  # открыть файл для чтения
+                with open(file_name, encoding='utf-8') as file:  # открыть файл для чтения
                     text = file.read()
                     text = text.split(args[1])
                     sort_function(text) # сортировка на повторения
@@ -38,9 +38,11 @@ def work_with_args():
                             with open('file_with_repetitions.txt', 'w') as file:  #  создание файла
                                 if turns:   # если в списке turns что-то есть, тогда записать повторения в файл
                                     file.write(template.format(len(turns), str(turns))) # запись в файл temlpate
-                                if not turns:   # если в списке turns ничего нет, тогда вывести Повторений нет!
+                                    print('Повторения записаны в файл \'file_with_repetitions.txt\'')
+                                elif not turns:   # если в списке turns ничего нет, тогда вывести Повторений нет!
                                     print('Повторений нет!')
-                            print('Повторения записаны в файл \'file_with_repetitions.txt\'')
+                                    file.write('Повторений нет!')
+
             except IndexError:  # если переданы не все аргументы
                 print('[ Error ] [ NotAllArgumentsSpecified ]')
                 print('Try this: python3 main.py path_to_file space [write repetitions to file? or just display? yes / no]')
@@ -61,9 +63,13 @@ def write_in_file(choice, content): # запись в файл
         if '/' in file_name:    # если указан путь к файлу
             index = file_name.rfind('/')    # записываем индекс самого правого символа '/'
             file_with_repetitions = file_name[:index + 1] + 'file_with_repetitions.txt' # и посредством среза узнаем путь к файлу а посредством конкатенации добавляем имя file_with_repetitions.txt и записываем файл с повторениями туда (/some/path/filename.txt)
-        file = open(file_with_repetitions, 'w')   #  создание файла
-        file.write(content) # запись в файл то что передано в аргумент content
-        print('Повторения записаны в файл \'file_with_repetitions.txt\'')
+            with open(file_with_repetitions, 'w') as file:  #  создание файла
+                file.write(content) # запись в файл то что передано в аргумент content
+            print('Повторения записаны в файл \'file_with_repetitions.txt\'')
+        else:
+            with open('file_with_repetitions.txt', 'w') as file:
+                file.write(content)
+            print('Повторения записаны в файл \'file_with_repetitions.txt\'')
     elif choice == 'no':
         pass
 
